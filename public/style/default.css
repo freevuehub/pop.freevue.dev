@@ -9,8 +9,41 @@ body,
   height: 100%;
   width: 100%;
   overflow: hidden;
+  font-size: 14px;
+  font-family: 'nanumsquare', serif;
+  font-weight: 400;
 }
 
 a {
   text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'GmarketSans', serif;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 6rem;
+  line-height: 6rem;
+}
+h2 {
+  font-size: 3.75rem;
+  line-height: 3.75rem;
+}
+h3 {
+  font-size: 3rem;
+  line-height: 3.125rem;
+}
+h4 {
+  font-size: 2.125rem;
+  line-height: 2.5rem;
+}
+h5 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+h6 {
+  font-size: 1.25rem;
+  line-height: 2rem;
 }

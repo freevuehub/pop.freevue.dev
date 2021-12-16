@@ -1,3 +1,5 @@
 .env
 .idea
 projects
+deploy.sh
+stop.sh

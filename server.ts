@@ -30,9 +30,11 @@ app
 
 app
   .get('/', (_: Request, response: Response) => {
-    response.set('cache-control', 'no-store').render('index', {
-      title: "Pop | Freevue  Toy",
-    })
+    response
+      .set('cache-control', 'no-store')
+      .render('index', {
+        title: "Pop | Freevue  Toy",
+      })
   })
   .get('/:root', async (request: Request, response: Response) => {
     try {
