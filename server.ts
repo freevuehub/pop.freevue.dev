@@ -8,32 +8,36 @@ import {
   renderFileToString,
   json,
   urlencoded,
-  // opineCors,
 } from './deps.ts'
 
 const app = opine()
 const PORT = parseInt(Deno.env.get('PORT') ?? '3000')
 const __dirname = dirname(import.meta.url)
 
-app.engine('.html', renderFileToString)
+app.engine('.ejs', renderFileToString)
 
 app
   .set('port', PORT)
   .set('views', join(__dirname, 'views'))
-  .set('view engine', 'html')
+  .set('view engine', 'ejs')
 
 app
-  // .use(opineCors({ origin: `${Deno.env.get('ORIGIN')}`.split(',') ?? '' }))
   .use(serveStatic(join(__dirname, 'public')))
   .use(json())
   .use(urlencoded())
 
 app
-  .get('/', (_: Request, response: Response) => {
+  .get('/', async (_: Request, response: Response) => {
+    const dirList = []
+
+    for await (const dir of Deno.readDir('./projects')) {
+      dirList.push(dir)
+    }
+
     response
       .set('cache-control', 'no-store')
       .render('index', {
-        title: "Pop | Freevue  Toy",
+        data: { dirList }
       })
   })
   .get('/:root', async (request: Request, response: Response) => {
