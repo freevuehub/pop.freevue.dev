@@ -69,7 +69,9 @@ app
         }))
       })
     } catch {
-      response.send('Error')
+      response
+        .set('cache-control', 'no-store')
+        .render('error')
     }
   })
   .get('/:root', async (request: Request, response: Response) => {
@@ -79,7 +81,9 @@ app
       response.type('html')
       response.end(toyFile)
     } catch {
-      response.send('Error')
+      response
+        .set('cache-control', 'no-store')
+        .render('error')
     }
   })
 

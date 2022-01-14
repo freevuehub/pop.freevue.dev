@@ -4,3 +4,8 @@
 
 .fill.width { width: 100%; }
 .fill.height { height: 100%; }
+
+.d-flex { display: flex; }
+.d-flex.dir-column { flex-direction: column; }
+
+.flex-1 { flex: 1; }
