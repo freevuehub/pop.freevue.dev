@@ -33,7 +33,7 @@
   <style>
     .container { flex-direction: column; overflow: auto; }
     .container .wrap { max-width: 960px; width: 100%; margin: 50px auto; flex-wrap: wrap; gap: 30px; perspective: 2000px; transform-style: preserve-3d; }
-    .card { display: block; width: 200px; height: 300px; box-shadow: 0 5px 20px 0 rgba(0,0,0,0.05); border-radius: 20px; position: relative; transition: transform 1s; transform-style: inherit; }
+    .card { display: block; width: 200px; height: 300px; box-shadow: 0 5px 20px 0 rgba(0,0,0,0.05); border-radius: 20px; position: relative; transition: transform 1s; transform-style: inherit; cursor: pointer; }
     .card .back { position: absolute; background-color: #22222210; left: 0; top: 0; right: 0; bottom: 0; transform: rotateY(180deg); backface-visibility: hidden; border-radius: 15px; padding: 20px; justify-content: space-evenly; margin: 20px; }
     .card .back span { height: 14px; background-color: #22222270; border-radius: 10px; font-size: 0; transform-origin: left center; }
     .card.on .back span { animation: grow infinite 3s; transform: scaleX(0); }
@@ -109,7 +109,7 @@
 
         timeOut = setTimeout(() => {
           window.location = dom.dataset['href']
-        }, 3000)
+        }, 2000)
       }
     })
   })
