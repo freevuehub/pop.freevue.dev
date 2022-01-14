@@ -40,6 +40,24 @@ app
         data: { dirList }
       })
   })
+  .get('/api', async (request: Request, response: Response) => {
+    const dirList = []
+
+    for await (const dir of Deno.readDir('./projects')) {
+      dirList.push(dir)
+    }
+
+    try {
+      response.send({
+        list: dirList.map((item) => ({
+          name: item.name,
+          url: `https://pop.freevue.dev/${item.name}`,
+        }))
+      })
+    } catch {
+      response.send('Error')
+    }
+  })
   .get('/:root', async (request: Request, response: Response) => {
     try {
       const toyFile = await Deno.readFile(`./projects/${request.params.root}/index.html`)
