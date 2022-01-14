@@ -8,11 +8,24 @@ import {
   renderFileToString,
   json,
   urlencoded,
+  opineCors,
+  CorsOptions,
 } from './deps.ts'
 
 const app = opine()
 const PORT = parseInt(Deno.env.get('PORT') ?? '3000')
+const ORIGIN = Deno.env.get('ORIGIN')
 const __dirname = dirname(import.meta.url)
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+const loadOriginsFromDataBase = async () => {
+  await sleep(100)
+
+  return `${ORIGIN}`.split(',').map((url) => `${url.trim()}`)
+};
+const corsOptions: CorsOptions = {
+  origin: async () => await loadOriginsFromDataBase(),
+}
 
 app.engine('.ejs', renderFileToString)
 
@@ -22,6 +35,7 @@ app
   .set('view engine', 'ejs')
 
 app
+  .use(opineCors(corsOptions))
   .use(serveStatic(join(__dirname, 'public')))
   .use(json())
   .use(urlencoded())
