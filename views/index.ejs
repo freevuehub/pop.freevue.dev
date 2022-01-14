@@ -14,7 +14,7 @@
   <title>Freevue Toy</title>
 
   <link rel="shortcut icon" href="https://file.freevue.dev/images/logo/blog/squere-logo.png">
-  <link rel="icon" href="https://file.freevue.dev/images/logo/blog/favicon.icon">
+  <link rel="icon" href="https://file.freevue.dev/images/logo/blog/favicon.ico">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXZ5RY7Y37"></script>
@@ -31,52 +31,52 @@
   <link rel="stylesheet" href="/style/common.css">
 
   <style>
-    #app {
-      height: 100%;
-    }
-    .container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    .container .wrap {
-      max-width: 960px;
-      width: 100%;
-      margin: 50px auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-    }
-    .card {
-      display: block;
-      width: 300px;
-      box-shadow: 0 5px 20px 0 rgba(0,0,0,0.05);
-      border-radius: 20px;
-      padding: 20px;
-    }
-    .card .logo {
-      display: block;
-      width: 100px;
-    }
-    .footer {
-      margin-top: auto;
-    }
-    .copyright {
-      font-size: 14px;
+    .container { flex-direction: column; overflow: auto; }
+    .container .wrap { max-width: 960px; width: 100%; margin: 50px auto; flex-wrap: wrap; gap: 30px; perspective: 2000px; transform-style: preserve-3d; }
+    .card { display: block; width: 200px; height: 300px; box-shadow: 0 5px 20px 0 rgba(0,0,0,0.05); border-radius: 20px; position: relative; transition: transform 1s; transform-style: inherit; }
+    .card .back { position: absolute; background-color: #22222210; left: 0; top: 0; right: 0; bottom: 0; transform: rotateY(180deg); backface-visibility: hidden; border-radius: 15px; padding: 20px; justify-content: space-evenly; margin: 20px; }
+    .card .back span { height: 14px; background-color: #22222270; border-radius: 10px; font-size: 0; transform-origin: left center; }
+    .card.on .back span { animation: grow infinite 3s; transform: scaleX(0); }
+    .card .back span:nth-of-type(1) { animation-delay: .2s; }
+    .card .back span:nth-of-type(2) { animation-delay: .4s; }
+    .card .back span:nth-of-type(3) { animation-delay: .6s; }
+    .card .back span:nth-of-type(4) { animation-delay: .8s; }
+    .card .back span:nth-of-type(5) { animation-delay: 1s; }
+    .card .front { background-color: #fff; padding: 20px; position: absolute; left: 0; top: 0; backface-visibility: hidden; justify-content: center; }
+    .card .front .logo { display: block; width: 100px; margin: 0 auto 10px; }
+    .card .front h4 { text-align: center; }
+
+    .card.on { transform: rotateY(180deg); }
+
+    .footer { margin-top: auto; }
+    .copyright { font-size: 14px; }
+
+    @keyframes grow {
+      0% { transform: scaleX(0); }
+      50% { transform: scaleX(1); }
+      90% { transform: scaleX(1); }
+      100% { transform: scaleX(0); }
     }
   </style>
 </head>
 <body>
-<div id="app">
-  <div class="container">
+<div id="app" class="fill height">
+  <div class="container d-flex fill width height flex-1">
     <h1>어서오세요!</h1>
-    <div class="wrap">
+    <div class="wrap d-flex">
       <% for(var dir of data.dirList){ %>
-        <div class="item">
-          <a href="/<%= dir.name %>" class="card">
+        <div data-href="/<%= dir.name %>" class="card">
+          <div class="back d-flex dir-column">
+            <span class="fill width d-block">line</span>
+            <span class="fill width d-block">line</span>
+            <span class="fill width d-block">line</span>
+            <span class="fill width d-block">line</span>
+            <span class="fill width d-block">line</span>
+          </div>
+          <div class="front fill width height d-flex dir-column">
+            <img class="logo" src="https://file.freevue.dev/images/pop/<%= dir.name %>/logo.png" alt="">
             <h4><%= dir.name %></h4>
-          </a>
+          </div>
         </div>
       <% } %>
     </div>
@@ -86,5 +86,33 @@
     <p class="copyright text--center">© FreeVue</p>
   </div>
 </div>
+
+<script>
+  let timeOut
+
+  const cardList = document.querySelectorAll('.card')
+
+  cardList.forEach((dom) => {
+    dom.addEventListener('click', (event) => {
+      event.preventDefault()
+
+      const hasOn = [...dom.classList].includes('on')
+
+      clearTimeout(timeOut)
+
+      cardList.forEach((card) => {
+        card.className = 'card'
+      })
+
+      if (!hasOn) {
+        dom.className = 'card on'
+
+        timeOut = setTimeout(() => {
+          window.location = dom.dataset['href']
+        }, 3000)
+      }
+    })
+  })
+</script>
 </body>
 </html>

@@ -5,6 +5,7 @@
 .fill.width { width: 100%; }
 .fill.height { height: 100%; }
 
+.d-block { display: block; }
 .d-flex { display: flex; }
 .d-flex.dir-column { flex-direction: column; }
 
